@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.DemoApplicationTests;
+import com.example.demo.model.entity.Item;
 import com.example.demo.model.entity.User;
 
 public class UserRepositoryTest extends DemoApplicationTests {
@@ -24,8 +25,8 @@ public class UserRepositoryTest extends DemoApplicationTests {
 //	@Test
 	public void create() {
 		User user = new User();
-		user.setAccount("TestUser03");
-		user.setEmail("TestUser03@gmail.com");
+		user.setAccount("TestUser02");
+		user.setEmail("TestUser02@gmail.com");
 		user.setPhoneNumber("010-3333-3333");
 		user.setCreatedAt(LocalDateTime.now());
 		user.setCreatedBy("TestUser03");
@@ -34,13 +35,16 @@ public class UserRepositoryTest extends DemoApplicationTests {
 		System.out.println("newUser = " + newUser);
 	}
 	
-//	@Test
+	@Test
+	@Transactional
 	public void read() {
-//		List<User> userList = userRepository.findAll();
-		Optional<User> user = userRepository.findById(2L);
+		Optional<User> user = userRepository.findById(1L);
 		user.ifPresent(selectUser-> {
-			System.out.println("user : " + selectUser);
-			System.out.println("email : " + selectUser.getEmail());
+			selectUser.getOrderDetailList().stream().forEach(detail ->{
+				Item item = detail.getItem();
+				System.out.println("item = " + item);
+				System.out.println("detail = " + detail.getUser());
+			});
 		});
 	}
 	
@@ -56,7 +60,7 @@ public class UserRepositoryTest extends DemoApplicationTests {
 		});
 	}
 	
-	@Test
+//	@Test
 	@Transactional
 	public void delete() {
 		Optional<User> user = userRepository.findById(4L);

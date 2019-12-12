@@ -1,12 +1,15 @@
 package com.example.demo.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -30,4 +33,10 @@ public class User {
 	private String createdBy;
 	private LocalDateTime updatedAt;
 	private String updatedBy;
+	
+	// OrderDetail과 USer는 N : 1관계, 양객체 모두에 annotation을 설정해야한다.
+	// fetch :
+	// mappedBy : 어떤 객체와 연결을 시킬 것인지 지정 OrderDetail에 선언한 변수명과 동일해야 한다.
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private List<OrderDetail> orderDetailList;
 }
