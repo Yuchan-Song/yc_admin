@@ -3,6 +3,7 @@ package com.example.demo.model.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long itemId;
+	private Long id;
 
 	private String name;
 	private String title;

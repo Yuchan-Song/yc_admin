@@ -23,7 +23,6 @@ public class OrderDetailRepositoryTest extends DemoApplicationTests {
 	
 //	@Test
 	public void create() {
-		
 		Optional<User> user = userRepository.findById(1L);
 		
 		user.ifPresent(orderUser -> {

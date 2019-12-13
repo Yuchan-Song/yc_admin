@@ -16,14 +16,14 @@ public class ItemRepositoryTest extends DemoApplicationTests {
 	@Autowired
 	private ItemRepository itemRepository;
 
-	@Test
+//	@Test
 	public void create() {
 		Item item = new Item();
-		item.setName("노트북");
-		item.setPrice(1000000);
-		item.setTitle("노트북구매");
-		item.setContent("삼성 노트북 Pen");
-		item.setPartnerId(10L);
+		item.setName("삼성 노트북");
+		item.setPrice(11000000);
+		item.setTitle("삼성 노트북");
+		item.setContent("2019년 신상품");
+		item.setPartnerId(2L);
 		
 		Item newItem = itemRepository.save(item);
 		assertNotNull(newItem); 
@@ -34,7 +34,6 @@ public class ItemRepositoryTest extends DemoApplicationTests {
 		Long id = 1L;
 		
 		Optional<Item> item = itemRepository.findById(id);
-		
 		assertTrue(item.isPresent());
 	}
 	

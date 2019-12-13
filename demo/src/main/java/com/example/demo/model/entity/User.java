@@ -25,7 +25,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE) // PK관리 전략 설정 
 	private long id;
 
-	@Column(name="account")	// 컬럼명과 변수명이 다를 때 매칭 시키는 어노테이션 ( java에서는 camel case, db에서는 snake case )
+//	@Column(name="account")	// 컬럼명과 변수명이 다를 때 매칭 시키는 어노테이션 ( java에서는 camel case, db에서는 snake case )
 	private String account;
 	private String email;
 	private String phoneNumber;

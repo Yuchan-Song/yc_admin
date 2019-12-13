@@ -34,7 +34,6 @@ public class OrderDetail {
 	private String status;
 	private LocalDateTime arrivalDate;
 	private int quantity;
-//	@Column(name = "total_price")
 	private int totalPrice;
 	private LocalDateTime orderAt;
 	private String createdBy;

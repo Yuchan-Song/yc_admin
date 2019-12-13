@@ -43,7 +43,6 @@ public class UserRepositoryTest extends DemoApplicationTests {
 			selectUser.getOrderDetailList().stream().forEach(detail ->{
 				Item item = detail.getItem();
 				System.out.println("item = " + item);
-				System.out.println("detail = " + detail.getUser());
 			});
 		});
 	}
