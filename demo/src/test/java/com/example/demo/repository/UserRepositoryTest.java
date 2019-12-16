@@ -38,7 +38,10 @@ public class UserRepositoryTest extends DemoApplicationTests {
 	@Test
 	@Transactional
 	public void read() {
-		Optional<User> user = userRepository.findById(1L);
+//		Optional<User> user = userRepository.findById(1L);
+		// UserRepository에 findByAccount, findByEmail을 구현 후 사용할 수 있다.
+		Optional<User> user = userRepository.findByAccount("testUser01");
+		
 		user.ifPresent(selectUser-> {
 			selectUser.getOrderDetailList().stream().forEach(detail ->{
 				Item item = detail.getItem();
