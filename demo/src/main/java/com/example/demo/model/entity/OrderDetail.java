@@ -23,24 +23,27 @@ public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Long userId;
+	private Long orderGroupId;
 
+	private int quantity;
+	private int totalPrice;
+	
+
+	private String status;
+	private String createdBy;
+	private String updatedBy;
+	
+	private LocalDateTime arrivalDate;
+	private LocalDateTime orderAt;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+	
 	// 주문의 입장에서는 자기 자신이 N이고 userid가 1이기 때문에 ManyToOne annotation을 사용한다. 객체 자체를 설정해야 한다 hibernate에서는 userId로 인식
 	@ManyToOne 
 	private User user;	
 	
 	@ManyToOne
 	private Item item;
-
-	private String status;
-	private LocalDateTime arrivalDate;
-	private int quantity;
-	private int totalPrice;
-	private LocalDateTime orderAt;
-	private String createdBy;
-	private LocalDateTime createdAt;
-	private String updatedBy;
-	private LocalDateTime updatedAt;
-	private Long orderGroupId;
-	
 
 }

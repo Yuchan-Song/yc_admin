@@ -29,10 +29,11 @@ public class User {
 	private String account;
 	private String email;
 	private String phoneNumber;
-	private LocalDateTime createdAt;
 	private String createdBy;
-	private LocalDateTime updatedAt;
 	private String updatedBy;
+	
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 	
 	// OrderDetail과 USer는 N : 1관계, 양객체 모두에 annotation을 설정해야한다.
 	// fetch :

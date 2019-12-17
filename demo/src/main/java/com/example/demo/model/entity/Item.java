@@ -23,19 +23,22 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Long partnerId;
 
+	private int price;
+	
+	private String status;
 	private String name;
 	private String title;
 	private String content;
-	private Integer price;
 	private String brandName;
+	private String createdBy;
+	private String updatedBy;
+	
 	private LocalDateTime registeredAt;
 	private LocalDateTime unregisteredAt;
-	private String createdBy;
 	private LocalDateTime createdAt;
-	private String updatedBy;
 	private LocalDateTime updatedAt;
-	private Long partnerId;
 	
 	// Fetch 타입
 	// LAZY : 지연로딩 - select * from item where id = ? : 선택한 id에 대해서만 select : 연관관계가 설정된 테이블의 정보를 함께 가져오지 않는다.
