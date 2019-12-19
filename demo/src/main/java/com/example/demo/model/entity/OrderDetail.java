@@ -23,7 +23,7 @@ public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long userId;
+//	private Long userId;
 	private Long orderGroupId;
 
 	private int quantity;

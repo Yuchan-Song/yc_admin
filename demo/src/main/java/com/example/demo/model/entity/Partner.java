@@ -13,22 +13,30 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Table(name = "category")
+@Table(name = "partner")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
-	
+public class Partner {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Long categoryId;
 	
-	private String title;
-	private String type;
+	private String address;
+	private String businessNumber;
+	private String callCenter;
+	private String ceoName;
 	private String createdBy;
 	private String updatedBy;
+	private String name;
+	private String status;
+	private String partnerNumber;
 	
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
-
+	private LocalDateTime registereddAt;
+	private LocalDateTime unregistereddAt;
+	
 }
