@@ -23,5 +23,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	// account와 email 검색
 	// select * from user where account = ? and email = ?
 	Optional<User> findByAccountAndEmail(String account, String email);
+	
+	// phoneNumber의 첫번째로 검색 후 id로 내림차순 정렬
+	User findFirstByPhoneNumberOrderByIdDesc(String phoneNumber);
 
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class CategoryRepositoryTest extends DemoApplicationTests{
 	@Autowired
 	CategoryRepository categoryRepository;
 	
-	@Test
+//	@Test
 	public void create() {
 		String type = "COMPUTER";
 		String title = "컴퓨터";
@@ -36,8 +37,15 @@ public class CategoryRepositoryTest extends DemoApplicationTests{
 	}
 	
 //	@Test
-//	public void read() {
-//		
-//	}
+	public void read() {
+//		Optional<Category> category = categoryRepository.findById(1L);
+		String type = "COMPUTER";
+		Optional<Category> category = categoryRepository.findByType(type);
+		
+		category.ifPresent(c -> {
+			assertEquals(c.getType(), type);
+			System.out.println(c.getId());
+		});
+	}
 
 }

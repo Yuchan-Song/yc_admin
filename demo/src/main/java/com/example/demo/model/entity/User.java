@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // PK관리 전략 설정 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE) // PK관리 전략 설정 
 	private long id;
 
 //	@Column(name="account")	// 컬럼명과 변수명이 다를 때 매칭 시키는 어노테이션 ( java에서는 camel case, db에서는 snake case )
@@ -33,9 +33,13 @@ public class User {
 	private String phoneNumber;
 	private String createdBy;
 	private String updatedBy;
+	private String password;
+	private String status;
+	private String registeredBy;
 	
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private LocalDateTime registeredAt;
 	
 	// OrderDetail과 USer는 N : 1관계, 양객체 모두에 annotation을 설정해야한다.
 	// fetch :
