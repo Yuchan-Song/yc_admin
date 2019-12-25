@@ -44,10 +44,15 @@ public class UserRepositoryTest extends DemoApplicationTests {
 		assertNotNull(newUser);
 	}
 	
-//	@Test
+	@Test
 	public void read() {
 		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
 		assertNotNull(user);
+		
+		user.getOrderGroupList().stream().forEach(orderGroup ->{
+			System.out.println(orderGroup.getRevAdress());
+			System.out.println(orderGroup.getTotalPrice());
+		});
 	}
 
 }

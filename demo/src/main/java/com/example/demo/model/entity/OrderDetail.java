@@ -17,14 +17,14 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"user", "item"})
+@ToString(exclude = {"user", "item", "orderGroup"})
 public class OrderDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 //	private Long userId;
-	private Long orderGroupId;
+//	private Long orderGroupId;
 
 	private int quantity;
 	private int totalPrice;
@@ -43,7 +43,12 @@ public class OrderDetail {
 	@ManyToOne 
 	private User user;	
 	
+	// OrderDetail N : 1 Item
 	@ManyToOne
 	private Item item;
+	
+	// OrderDetail N : 1 OrderGroup
+	@ManyToOne
+	private OrderGroup orderGroup;
 
 }

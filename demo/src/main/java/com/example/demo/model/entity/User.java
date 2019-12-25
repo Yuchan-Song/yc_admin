@@ -15,12 +15,14 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Table(name = "user")	// 클래스명과 테이블명이 같으면 생략이 가능
 @Entity	// = 테이블
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"orderDetailList", "orderGroupList"})
 public class User {
 
 	@Id
@@ -46,4 +48,8 @@ public class User {
 	// mappedBy : 어떤 객체와 연결을 시킬 것인지 지정 OrderDetail에 선언한 변수명과 동일해야 한다.
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<OrderDetail> orderDetailList;
+	
+	// User 1 : N OrderGroup  
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private List<OrderGroup> orderGroupList;
 }
