@@ -28,14 +28,12 @@ public class OrderDetailRepositoryTest extends DemoApplicationTests {
 		user.ifPresent(orderUser -> {
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setItem(new Item());
-			orderDetail.setOrderGroupId(1L);
 			orderDetail.setStatus("0001");
 			orderDetail.setCreatedBy("testUser");
 			orderDetail.setOrderAt(LocalDateTime.now());
 			orderDetail.setArrivalDate(LocalDateTime.now());
 			orderDetail.setCreatedAt(LocalDateTime.now());
 			orderDetail.setTotalPrice(1000000);
-			orderDetail.setUser(orderUser);
 		
 			OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
 			assertNotNull(newOrderDetail);

@@ -12,10 +12,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @Data
 @Table(name = "order_group")
@@ -23,6 +30,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"orderDetailList", "user"})
+@Builder
+@Accessors(chain = true)
 public class OrderGroup {
 
 	@Id
@@ -32,7 +41,9 @@ public class OrderGroup {
 	private int totalPrice;
 	private int totalQuantity;
 	
+	@CreatedBy
 	private String createdBy;
+	@LastModifiedBy
 	private String updatedBy;
 	private String orderType;
 	private String paymentType;
@@ -42,7 +53,9 @@ public class OrderGroup {
 	
 	private LocalDateTime orderAt;
 	private LocalDateTime arrivalDate;
+	@CreatedDate
 	private LocalDateTime createdAt;
+	@LastModifiedDate
 	private LocalDateTime updatedAt;
 	
 	// OrderGrou N : 1 userp

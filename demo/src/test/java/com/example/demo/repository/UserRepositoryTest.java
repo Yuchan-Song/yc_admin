@@ -15,36 +15,40 @@ public class UserRepositoryTest extends DemoApplicationTests {
 	@Autowired
 	private UserRepository userRepository;
 	
-//	@Test
+	@Test
 	public void create() {
 		String account = "Test01";
 		String password = "Test01";
 		String status = "REG";
 		String email = "Test01@gmail.com";
 		String phoneNumber = "010-1111-2222";
-		String createdBy = "Admin";
 		String registeredBy = "Admin";
 
 		LocalDateTime registeredAt = LocalDateTime.now();
-		LocalDateTime createdAt = LocalDateTime.now();
 		
 		User user = new User();
-		
 		user.setAccount(account);
 		user.setPhoneNumber(phoneNumber);
 		user.setPassword(password);
 		user.setStatus(status);
 		user.setEmail(email);
-		user.setCreatedBy(createdBy);
-		user.setCreatedAt(createdAt);
 		user.setRegisteredBy(registeredBy);
 		user.setRegisteredAt(registeredAt);
+		
+		// User에 Builder annotation을 추가하여 아래와 같이 user 객체 생성이 가능하다
+		// 기존의 생성자
+		User user2 = User.builder()
+					.account(account)
+					.password(password)
+					.status(status)
+					.email(email)
+					.build();
 		
 		User newUser = userRepository.save(user);
 		assertNotNull(newUser);
 	}
 	
-	@Test
+//	@Test
 	public void read() {
 		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
 		assertNotNull(user);

@@ -23,7 +23,6 @@ public class ItemRepositoryTest extends DemoApplicationTests {
 		item.setPrice(11000000);
 		item.setTitle("삼성 노트북");
 		item.setContent("2019년 신상품");
-		item.setPartnerId(2L);
 		
 		Item newItem = itemRepository.save(item);
 		assertNotNull(newItem); 

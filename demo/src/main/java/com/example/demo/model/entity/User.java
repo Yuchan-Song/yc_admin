@@ -3,7 +3,6 @@ package com.example.demo.model.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,17 +11,26 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @Data
 @Table(name = "user")	// 클래스명과 테이블명이 같으면 생략이 가능
 @Entity	// = 테이블
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"orderDetailList", "orderGroupList"})
+@ToString(exclude = {"orderGroupList"})
+@Builder
+@Accessors(chain = true)
 public class User {
 
 	@Id
@@ -33,23 +41,23 @@ public class User {
 	private String account;
 	private String email;
 	private String phoneNumber;
+	@CreatedBy
 	private String createdBy;
+	@LastModifiedBy
 	private String updatedBy;
 	private String password;
 	private String status;
 	private String registeredBy;
 	
+	@CreatedDate
 	private LocalDateTime createdAt;
+	@LastModifiedDate
 	private LocalDateTime updatedAt;
 	private LocalDateTime registeredAt;
 	
-	// OrderDetail과 USer는 N : 1관계, 양객체 모두에 annotation을 설정해야한다.
-	// fetch :
+	// OrderDetail과 User는 N : 1관계, 양객체 모두에 annotation을 설정해야한다.
+	// User 1 : N OrderGroup
 	// mappedBy : 어떤 객체와 연결을 시킬 것인지 지정 OrderDetail에 선언한 변수명과 동일해야 한다.
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private List<OrderDetail> orderDetailList;
-	
-	// User 1 : N OrderGroup  
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<OrderGroup> orderGroupList;
 }

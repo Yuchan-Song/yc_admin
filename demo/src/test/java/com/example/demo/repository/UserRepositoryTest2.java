@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.DemoApplicationTests;
 import com.example.demo.model.entity.Item;
+import com.example.demo.model.entity.OrderDetail;
 import com.example.demo.model.entity.User;
 
 public class UserRepositoryTest2 extends DemoApplicationTests {
@@ -43,9 +44,9 @@ public class UserRepositoryTest2 extends DemoApplicationTests {
 		Optional<User> user = userRepository.findByAccount("testUser01");
 		
 		user.ifPresent(selectUser-> {
-			selectUser.getOrderDetailList().stream().forEach(detail ->{
-				Item item = detail.getItem();
-				System.out.println("item = " + item);
+			selectUser.getOrderGroupList().stream().forEach(group ->{
+				List<OrderDetail> orderDetail = group.getOrderDetailList();
+				System.out.println(orderDetail.size());
 			});
 		});
 	}
