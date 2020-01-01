@@ -54,6 +54,7 @@ public class User {
 	@LastModifiedDate
 	private LocalDateTime updatedAt;
 	private LocalDateTime registeredAt;
+	private LocalDateTime unregisteredAt;
 	
 	// OrderDetail과 User는 N : 1관계, 양객체 모두에 annotation을 설정해야한다.
 	// User 1 : N OrderGroup

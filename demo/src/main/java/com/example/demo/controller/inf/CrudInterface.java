@@ -2,14 +2,13 @@ package com.example.demo.controller.inf;
 
 import com.example.demo.model.network.Header;
 
-@SuppressWarnings("rawtypes")
-public interface CrudInterface {
+public interface CrudInterface<Req, Res> {
 	
-	Header create();
+	Header<Res> create(Header<Req> request);
 	
-	Header read(Long id);
+	Header<Res> read(Long id);
 	
-	Header update();
+	Header<Res> update(Header<Req> request);
 
-	Header delete(Long id);
+	Header<Res> delete(Long id);
 }
