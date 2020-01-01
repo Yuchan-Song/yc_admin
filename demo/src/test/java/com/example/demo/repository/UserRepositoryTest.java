@@ -15,7 +15,7 @@ public class UserRepositoryTest extends DemoApplicationTests {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Test
+//	@Test
 	public void create() {
 		String account = "Test01";
 		String password = "Test01";

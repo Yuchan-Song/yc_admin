@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.SearchParam;
+import com.example.demo.model.network.Header;
 
 @RestController
 @RequestMapping("/api")
@@ -29,4 +30,9 @@ public class GetController {
 		return searchParam;
 	}
 
+	@GetMapping("/getHeader")
+	public Header getHeader() {
+		return new Header().builder().resultCode("OK").description("OK").build();
+	}
+	
 }
