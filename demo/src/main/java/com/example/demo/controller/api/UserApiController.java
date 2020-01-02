@@ -44,15 +44,16 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
 	@Override
 	@PutMapping("") // /api/user
 	public Header<UserApiResponse> update(@RequestBody Header<UserApiRequest> request) {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("{}", request);
+		return userApiLogicService.update(request);
 	}
 
 	@Override
 	@DeleteMapping("{id}") // /api/user/{id}
-	public Header<UserApiResponse> delete(@PathVariable(name="id") Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public Header delete(@PathVariable(name="id") Long id) {
+		log.info("read id : {}", id);
+		return userApiLogicService.delete(id);
 	}
 
 }

@@ -58,14 +58,42 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
 	@Override
 	public Header<UserApiResponse> update(Header<UserApiRequest> request) {
-		// TODO Auto-generated method stub
-		return null;
+		// 1. get data
+		UserApiRequest userApiRequest = request.getData();
+		
+		// 2. user findbyId
+		Optional<User> optional = userRepository.findById(userApiRequest.getId());
+		
+		// 3. update & create response
+		return optional.map(user -> {
+			user.setAccount(userApiRequest.getAccount())
+				.setPassword(userApiRequest.getPassword())
+				.setPhoneNumber(userApiRequest.getPhoneNumber())
+				.setStatus(userApiRequest.getStatus())
+				.setEmail(userApiRequest.getEmail())
+				.setRegisteredAt(userApiRequest.getRegisteredAt())
+				.setUnregisteredAt(userApiRequest.getUnregisteredAt());
+			
+			return user;
+		})
+		.map(user -> userRepository.save(user))		// update
+		.map(user -> response(user))				// create response
+		.orElseGet(() -> Header.ERROR("데이터 없음"));
+		
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public Header<UserApiResponse> delete(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Header delete(Long id) {
+		// 1. id -> response getOne, getById
+		Optional<User> optional = userRepository.findById(id);
+		
+		// 2. delete
+		return optional.map(user -> {
+			userRepository.delete(user); // delete	
+			return Header.OK();
+		})
+		.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 	
 	// user 를 UserApiResponse로 만들어서 return
