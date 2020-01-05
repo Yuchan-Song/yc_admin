@@ -12,47 +12,47 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.network.Header;
-import com.example.demo.model.network.request.UserApiRequest;
-import com.example.demo.model.network.response.UserApiResponse;
-import com.example.demo.service.UserApiLogicService;
+import com.example.demo.model.network.request.ItemApiRequest;
+import com.example.demo.model.network.response.ItemApiResponse;
+import com.example.demo.service.ItemApiLogicService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/user")
-public class UserApiController implements CrudInterface<UserApiRequest, UserApiResponse> {
+@RequestMapping("/api/item")
+public class ItemApiController implements CrudInterface<ItemApiRequest, ItemApiResponse>{
 	
 	@Autowired
-	private UserApiLogicService userApiLogicService;
+	private ItemApiLogicService itemApiLogicService;
 
 	@Override
-	@PostMapping("") // /api/user
-	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> request) {
+	@PostMapping("")
+	public Header<ItemApiResponse> create(@RequestBody Header<ItemApiRequest> request) {
 		log.info("{}", request);
-		return userApiLogicService.create(request);
+		return itemApiLogicService.create(request);
 	}
 
 	@Override
-	@GetMapping("{id}") // /api/user/{id}
-	public Header<UserApiResponse> read(@PathVariable(name = "id") Long id) {
-		log.info("read id : {}", id);
-		return userApiLogicService.read(id);
+	@GetMapping("{id}")
+	public Header<ItemApiResponse> read(@PathVariable(name="id") Long id) {
+		log.info("{}", id);
+		return itemApiLogicService.read(id);
 	}
 
 	@Override
-	@PutMapping("") // /api/user
-	public Header<UserApiResponse> update(@RequestBody Header<UserApiRequest> request) {
+	@PutMapping("")
+	public Header<ItemApiResponse> update(@RequestBody Header<ItemApiRequest> request) {
 		log.info("{}", request);
-		return userApiLogicService.update(request);
+		return itemApiLogicService.update(request);
 	}
 
 	@Override
-	@DeleteMapping("{id}") // /api/user/{id}
 	@SuppressWarnings({"unchecked", "rawtypes"})
+	@DeleteMapping("{id}")
 	public Header delete(@PathVariable(name="id") Long id) {
-		log.info("read id : {}", id);
-		return userApiLogicService.delete(id);
+		log.info("{}", id);
+		return itemApiLogicService.delete(id);
 	}
-
+	
 }

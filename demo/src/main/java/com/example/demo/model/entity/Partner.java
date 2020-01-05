@@ -54,8 +54,8 @@ public class Partner {
 	private LocalDateTime createdAt;
 	@LastModifiedDate
 	private LocalDateTime updatedAt;
-	private LocalDateTime registereddAt;
-	private LocalDateTime unregistereddAt;
+	private LocalDateTime registeredAt;
+	private LocalDateTime unregisteredAt;
 	
 	// Partner 1 : N Item
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
