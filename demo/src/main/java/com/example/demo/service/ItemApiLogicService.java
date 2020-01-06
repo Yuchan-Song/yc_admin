@@ -12,9 +12,13 @@ import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.ItemApiRequest;
 import com.example.demo.model.network.response.ItemApiResponse;
 import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.PartnerRepository;
 
 @Service
 public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemApiResponse> {
+	
+	@Autowired
+	private PartnerRepository partnerRepository;
 	
 	@Autowired
 	private ItemRepository itemRepository;
@@ -22,18 +26,19 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 	@Override
 	public Header<ItemApiResponse> create(Header<ItemApiRequest> request) {
 
-		ItemApiRequest itemApiRequest = request.getData();
+		ItemApiRequest body = request.getData();
 
 		Item item = Item.builder()
-					.status(itemApiRequest.getStatus())
-					.name(itemApiRequest.getName())
-					.title(itemApiRequest.getTitle())
-					.content(itemApiRequest.getContent())
-					.brandName(itemApiRequest.getBrandName())
+					.status(body.getStatus())
+					.name(body.getName())
+					.title(body.getTitle())
+					.content(body.getContent())
+					.brandName(body.getBrandName())
 					.createdBy("ADMIN USER")
 					.registeredAt(LocalDateTime.now())
 					.createdAt(LocalDateTime.now())
-					.price(itemApiRequest.getPrice())
+					.price(body.getPrice())
+					.partner(partnerRepository.getOne(body.getId()))
 					.build();
 		
 		Item newItem = itemRepository.save(item);
@@ -52,19 +57,20 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
 	@Override
 	public Header<ItemApiResponse> update(Header<ItemApiRequest> request) {
-		ItemApiRequest itemApiRequest = request.getData();
+		ItemApiRequest body = request.getData();
 		
-		Optional<Item> optional = itemRepository.findById(itemApiRequest.getId());
+		Optional<Item> optional = itemRepository.findById(body.getId());
 		
 		return optional.map(item -> {
-			item.setStatus(itemApiRequest.getStatus())
-				.setName(itemApiRequest.getName())
-				.setTitle(itemApiRequest.getTitle())
-				.setContent(itemApiRequest.getContent())
-				.setBrandName(itemApiRequest.getBrandName())
+			item.setStatus(body.getStatus())
+				.setName(body.getName())
+				.setTitle(body.getTitle())
+				.setContent(body.getContent())
+				.setBrandName(body.getBrandName())
 				.setUpdatedBy("ADMIN USER")
 				.setUpdatedAt(LocalDateTime.now())
-				.setPrice(itemApiRequest.getPrice());
+				.setPrice(body.getPrice())
+				.setPartner(partnerRepository.getOne(body.getId()));
 			
 			return item;
 		})
