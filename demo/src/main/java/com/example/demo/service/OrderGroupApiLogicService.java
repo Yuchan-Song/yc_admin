@@ -79,7 +79,7 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 	}
 
 	@Override
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"rawtypes"})
 	public Header delete(Long id) {
 		return orderGroupRepository.findById(id)
 				.map(orderGroup -> {

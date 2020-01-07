@@ -49,7 +49,7 @@ public class OrderGroupApiController implements CrudInterface<OrderGroupApiReque
 
 	@Override
 	@DeleteMapping("{id}")
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"rawtypes"})
 	public Header delete(@PathVariable(name="id") Long id) {
 		log.info("id", id);
 		return orderGroupApiLogicService.delete(id);

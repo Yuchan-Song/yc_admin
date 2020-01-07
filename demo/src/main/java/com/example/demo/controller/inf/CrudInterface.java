@@ -10,5 +10,6 @@ public interface CrudInterface<Req, Res> {
 	
 	Header<Res> update(Header<Req> request);
 
-	Header<Res> delete(Long id);
+	@SuppressWarnings("rawtypes")
+	Header delete(Long id);
 }
