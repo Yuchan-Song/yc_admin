@@ -14,40 +14,45 @@ import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.OrderGroupApiRequest;
 import com.example.demo.model.network.response.OrderGroupResponse;
+import com.example.demo.service.OrderGroupApiLogicService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/ordergroup/")
 public class OrderGroupApiController implements CrudInterface<OrderGroupApiRequest, OrderGroupResponse>{
 
-//	@Autowired
-//	private O
+	@Autowired
+	private OrderGroupApiLogicService orderGroupApiLogicService;
 	
 	@Override
 	@PostMapping("")
 	public Header<OrderGroupResponse> create(@RequestBody Header<OrderGroupApiRequest> request) {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("{}", request);
+		return orderGroupApiLogicService.create(request);
 	}
 
 	@Override
 	@GetMapping("{id}")
 	public Header<OrderGroupResponse> read(@PathVariable(name="id") Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("id", id);
+		return orderGroupApiLogicService.read(id);
 	}
 
 	@Override
 	@PutMapping("")
 	public Header<OrderGroupResponse> update(@RequestBody Header<OrderGroupApiRequest> request) {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("{}", request);
+		return orderGroupApiLogicService.update(request);
 	}
 
 	@Override
 	@DeleteMapping("{id}")
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	public Header delete(@PathVariable(name="id") Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("id", id);
+		return orderGroupApiLogicService.delete(id);
 	}
 	
 

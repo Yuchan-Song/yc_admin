@@ -7,32 +7,75 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.OrderGroup;
+import com.example.demo.model.entity.User;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.OrderGroupApiRequest;
 import com.example.demo.model.network.response.OrderGroupResponse;
 import com.example.demo.repository.OrderGroupRepository;
 
 @Service
-public class OrderGroupLogicService implements CrudInterface<OrderGroupApiRequest, OrderGroupResponse> {
+public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiRequest, OrderGroupResponse> {
 
 	@Autowired
 	private OrderGroupRepository orderGroupRepository;
 	
 	@Override
 	public Header<OrderGroupResponse> create(Header<OrderGroupApiRequest> request) {
-		return null;
+		OrderGroupApiRequest body = request.getData();
+
+		User user = User.builder().id(body.getUserId()).build();
+
+		OrderGroup orderGroup = OrderGroup.builder()
+								.totalPrice(body.getTotalPrice())
+								.totalQuantity(body.getTotalQuantity())
+								.status(body.getStatus())
+								.orderType(body.getOrderType())
+								.revAdress(body.getRevAdress())
+								.revName(body.getRevName())
+								.paymentType(body.getPaymentType())
+								.createdBy(body.getCreatedBy())
+								.createdAt(body.getCreatedAt())
+								.updatedBy(body.getUpdatedBy())
+								.updatedAt(body.getUpdatedAt())
+								.arrivalDate(body.getArrivalDate())
+								.orderAt(body.getOrderAt())
+								.user(user)
+								.build();
+	
+		OrderGroup newOrderGroup = orderGroupRepository.save(orderGroup);
+		
+		return response(newOrderGroup);
 	}
 
 	@Override
 	public Header<OrderGroupResponse> read(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderGroupRepository.findById(id)
+				.map(orderGroup -> response(orderGroup))
+				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
 	@Override
 	public Header<OrderGroupResponse> update(Header<OrderGroupApiRequest> request) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		OrderGroupApiRequest body = request.getData();
+		
+		return orderGroupRepository.findById(body.getId())
+				.map(orderGroup -> {
+					orderGroup.setTotalPrice(body.getTotalPrice())
+						.setTotalQuantity(body.getTotalQuantity())
+						.setStatus(body.getStatus())
+						.setOrderType(body.getOrderType())
+						.setRevAdress(body.getRevAdress())
+						.setRevName(body.getRevName())
+						.setUpdatedAt(LocalDateTime.now())
+						.setUpdatedBy("ADMIN")
+						.setArrivalDate(LocalDateTime.now());
+					
+					return orderGroup;
+				})
+				.map(orderGroup -> orderGroupRepository.save(orderGroup))
+				.map(orderGroup -> response(orderGroup))
+				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
 	@Override
