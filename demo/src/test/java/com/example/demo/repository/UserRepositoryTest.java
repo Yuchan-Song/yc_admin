@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.DemoApplicationTests;
 import com.example.demo.model.entity.User;
+import com.example.demo.model.enumclass.UserStatus;
 
 public class UserRepositoryTest extends DemoApplicationTests {
 	
@@ -19,7 +20,6 @@ public class UserRepositoryTest extends DemoApplicationTests {
 	public void create() {
 		String account = "Test01";
 		String password = "Test01";
-		String status = "REG";
 		String email = "Test01@gmail.com";
 		String phoneNumber = "010-1111-2222";
 		String registeredBy = "Admin";
@@ -30,7 +30,7 @@ public class UserRepositoryTest extends DemoApplicationTests {
 		user.setAccount(account);
 		user.setPhoneNumber(phoneNumber);
 		user.setPassword(password);
-		user.setStatus(status);
+		user.setStatus(UserStatus.REGISTERED);
 		user.setEmail(email);
 		user.setRegisteredBy(registeredBy);
 		user.setRegisteredAt(registeredAt);
@@ -40,7 +40,7 @@ public class UserRepositoryTest extends DemoApplicationTests {
 		User user2 = User.builder()
 					.account(account)
 					.password(password)
-					.status(status)
+					.status(UserStatus.REGISTERED)
 					.email(email)
 					.build();
 		
@@ -54,7 +54,7 @@ public class UserRepositoryTest extends DemoApplicationTests {
 		assertNotNull(user);
 		
 		user.getOrderGroupList().stream().forEach(orderGroup ->{
-			System.out.println(orderGroup.getRevAdress());
+			System.out.println(orderGroup.getRevAddress());
 			System.out.println(orderGroup.getTotalPrice());
 		});
 	}

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.OrderGroupApiRequest;
-import com.example.demo.model.network.response.OrderGroupResponse;
+import com.example.demo.model.network.response.OrderGroupApiResponse;
 import com.example.demo.service.OrderGroupApiLogicService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,28 +21,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api/ordergroup/")
-public class OrderGroupApiController implements CrudInterface<OrderGroupApiRequest, OrderGroupResponse>{
+public class OrderGroupApiController implements CrudInterface<OrderGroupApiRequest, OrderGroupApiResponse>{
 
 	@Autowired
 	private OrderGroupApiLogicService orderGroupApiLogicService;
 	
 	@Override
 	@PostMapping("")
-	public Header<OrderGroupResponse> create(@RequestBody Header<OrderGroupApiRequest> request) {
+	public Header<OrderGroupApiResponse> create(@RequestBody Header<OrderGroupApiRequest> request) {
 		log.info("{}", request);
 		return orderGroupApiLogicService.create(request);
 	}
 
 	@Override
 	@GetMapping("{id}")
-	public Header<OrderGroupResponse> read(@PathVariable(name="id") Long id) {
+	public Header<OrderGroupApiResponse> read(@PathVariable(name="id") Long id) {
 		log.info("id", id);
 		return orderGroupApiLogicService.read(id);
 	}
 
 	@Override
 	@PutMapping("")
-	public Header<OrderGroupResponse> update(@RequestBody Header<OrderGroupApiRequest> request) {
+	public Header<OrderGroupApiResponse> update(@RequestBody Header<OrderGroupApiRequest> request) {
 		log.info("{}", request);
 		return orderGroupApiLogicService.update(request);
 	}

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,8 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import com.example.demo.model.enumclass.UserStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,7 +50,8 @@ public class User {
 	@LastModifiedBy
 	private String updatedBy;
 	private String password;
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private UserStatus status;		// REGISTERED, UNREGISTERED, WAITING 등등
 	private String registeredBy;
 	
 	@CreatedDate

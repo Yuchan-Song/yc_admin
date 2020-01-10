@@ -74,7 +74,7 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 	}
 
 	@Override
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"rawtypes"})
 	public Header delete(Long id) {
 		Optional<Partner> optional = partnerRepository.findById(id);
 		

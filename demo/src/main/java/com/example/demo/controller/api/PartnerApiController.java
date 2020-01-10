@@ -26,27 +26,26 @@ public class PartnerApiController implements CrudInterface<PartnerApiRequest, Pa
 	@Override
 	@PostMapping("")
 	public Header<PartnerApiResponse> create(@RequestBody Header<PartnerApiRequest> request) {
-		return null;
+		return partnerApiLogicService.create(request);
 	}
 
 	@Override
 	@GetMapping("{id}")
 	public Header<PartnerApiResponse> read(@PathVariable(name="id") Long id) {
-		return null;
+		return partnerApiLogicService.read(id);
 	}
 
 	@Override
 	@PutMapping("")
 	public Header<PartnerApiResponse> update(@RequestBody Header<PartnerApiRequest> request) {
-		// TODO Auto-generated method stub
-		return null;
+		return partnerApiLogicService.update(request);
 	}
 
 	@Override
 	@DeleteMapping("{id}")
+	@SuppressWarnings("rawtypes")
 	public Header delete(@PathVariable(name="id") Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return partnerApiLogicService.delete(id);
 	}
 
 }

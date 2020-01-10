@@ -11,23 +11,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderGroupResponse {
+public class OrderDetailApiResponse {
 
 	private Long id;
-	private Long userId;
-	
-	private int totalPrice;
-	private int totalQuantity;
-	
+	private Long orderGroupId;
+
+	private int quantity;
+	private int price;
+
+	private String status;
 	private String createdBy;
 	private String updatedBy;
-	private String orderType;
-	private String paymentType;
-	private String revAdress;
-	private String revName;
-	private String status;
 	
-	private LocalDateTime orderAt;
 	private LocalDateTime arrivalDate;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;

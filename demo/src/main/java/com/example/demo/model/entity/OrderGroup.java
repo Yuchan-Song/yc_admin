@@ -17,6 +17,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.example.demo.model.enumclass.OrderStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,9 +49,9 @@ public class OrderGroup {
 	private String updatedBy;
 	private String orderType;
 	private String paymentType;
-	private String revAdress;
+	private String revAddress;
 	private String revName;
-	private String status;
+	private OrderStatus status;
 	
 	private LocalDateTime orderAt;
 	private LocalDateTime arrivalDate;

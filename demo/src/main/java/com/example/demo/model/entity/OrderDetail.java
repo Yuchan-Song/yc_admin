@@ -34,7 +34,7 @@ public class OrderDetail {
 	private Long id;
 
 	private int quantity;
-	private int totalPrice;
+	private int price;
 
 	private String status;
 	@CreatedBy
@@ -43,7 +43,6 @@ public class OrderDetail {
 	private String updatedBy;
 	
 	private LocalDateTime arrivalDate;
-	private LocalDateTime orderAt;
 	@CreatedDate
 	private LocalDateTime createdAt;
 	@LastModifiedDate

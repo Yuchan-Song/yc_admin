@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.AdminUser;
@@ -11,6 +12,7 @@ import com.example.demo.model.network.request.AdminUserApiRequest;
 import com.example.demo.model.network.response.AdminUserApiResponse;
 import com.example.demo.repository.AdminUserRepository;
 
+@Service
 public class AdminUserApiLogicService implements CrudInterface<AdminUserApiRequest, AdminUserApiResponse>{
 	
 	@Autowired

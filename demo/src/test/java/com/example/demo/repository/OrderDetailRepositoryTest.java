@@ -12,6 +12,7 @@ import com.example.demo.DemoApplicationTests;
 import com.example.demo.model.entity.Item;
 import com.example.demo.model.entity.OrderDetail;
 import com.example.demo.model.entity.User;
+import com.example.demo.model.enumclass.OrderStatus;
 
 public class OrderDetailRepositoryTest extends DemoApplicationTests {
 
@@ -28,12 +29,10 @@ public class OrderDetailRepositoryTest extends DemoApplicationTests {
 		user.ifPresent(orderUser -> {
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setItem(new Item());
-			orderDetail.setStatus("0001");
 			orderDetail.setCreatedBy("testUser");
-			orderDetail.setOrderAt(LocalDateTime.now());
 			orderDetail.setArrivalDate(LocalDateTime.now());
 			orderDetail.setCreatedAt(LocalDateTime.now());
-			orderDetail.setTotalPrice(1000000);
+			orderDetail.setPrice(1000000);
 		
 			OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
 			assertNotNull(newOrderDetail);

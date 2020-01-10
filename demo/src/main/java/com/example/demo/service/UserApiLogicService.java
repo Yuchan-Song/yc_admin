@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.User;
+import com.example.demo.model.enumclass.UserStatus;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.UserApiRequest;
 import com.example.demo.model.network.response.UserApiResponse;
@@ -32,7 +33,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 		User user = User.builder()
 					.account(userApiRequest.getAccount())
 					.password(userApiRequest.getPassword())
-					.status("REGISTERED")
+					.status(UserStatus.REGISTERED)
 					.phoneNumber(userApiRequest.getPhoneNumber())
 					.email(userApiRequest.getEmail())
 					.registeredAt(LocalDateTime.now())
@@ -82,7 +83,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 		
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({"rawtypes"})
 	@Override
 	public Header delete(Long id) {
 		// 1. id -> response getOne, getById

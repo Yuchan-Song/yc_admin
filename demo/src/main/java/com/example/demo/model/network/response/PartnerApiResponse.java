@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class PartnerApiResponse {
 
 	private Long id;
+	private Long categoryId;
 	
 	private String address;
 	private String businessNumber;

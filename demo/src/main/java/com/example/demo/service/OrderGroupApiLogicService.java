@@ -8,19 +8,20 @@ import org.springframework.stereotype.Service;
 import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.OrderGroup;
 import com.example.demo.model.entity.User;
+import com.example.demo.model.enumclass.OrderStatus;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.OrderGroupApiRequest;
-import com.example.demo.model.network.response.OrderGroupResponse;
+import com.example.demo.model.network.response.OrderGroupApiResponse;
 import com.example.demo.repository.OrderGroupRepository;
 
 @Service
-public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiRequest, OrderGroupResponse> {
+public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiRequest, OrderGroupApiResponse> {
 
 	@Autowired
 	private OrderGroupRepository orderGroupRepository;
 	
 	@Override
-	public Header<OrderGroupResponse> create(Header<OrderGroupApiRequest> request) {
+	public Header<OrderGroupApiResponse> create(Header<OrderGroupApiRequest> request) {
 		OrderGroupApiRequest body = request.getData();
 
 		User user = User.builder().id(body.getUserId()).build();
@@ -28,9 +29,9 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 		OrderGroup orderGroup = OrderGroup.builder()
 								.totalPrice(body.getTotalPrice())
 								.totalQuantity(body.getTotalQuantity())
-								.status(body.getStatus())
+								.status(OrderStatus.PAYMENT)
 								.orderType(body.getOrderType())
-								.revAdress(body.getRevAdress())
+								.revAddress(body.getRevAddress())
 								.revName(body.getRevName())
 								.paymentType(body.getPaymentType())
 								.createdBy(body.getCreatedBy())
@@ -48,14 +49,14 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 	}
 
 	@Override
-	public Header<OrderGroupResponse> read(Long id) {
+	public Header<OrderGroupApiResponse> read(Long id) {
 		return orderGroupRepository.findById(id)
 				.map(orderGroup -> response(orderGroup))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
 	@Override
-	public Header<OrderGroupResponse> update(Header<OrderGroupApiRequest> request) {
+	public Header<OrderGroupApiResponse> update(Header<OrderGroupApiRequest> request) {
 		
 		OrderGroupApiRequest body = request.getData();
 		
@@ -63,9 +64,9 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 				.map(orderGroup -> {
 					orderGroup.setTotalPrice(body.getTotalPrice())
 						.setTotalQuantity(body.getTotalQuantity())
-						.setStatus(body.getStatus())
+						.setStatus(OrderStatus.DELIVERY_REQUEST)
 						.setOrderType(body.getOrderType())
-						.setRevAdress(body.getRevAdress())
+						.setRevAddress(body.getRevAddress())
 						.setRevName(body.getRevName())
 						.setUpdatedAt(LocalDateTime.now())
 						.setUpdatedBy("ADMIN")
@@ -90,15 +91,15 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 	}
 
 	@SuppressWarnings("unused")
-	private Header<OrderGroupResponse> response(OrderGroup orderGroup) {
-		OrderGroupResponse orderGroupResponse = OrderGroupResponse.builder()
+	private Header<OrderGroupApiResponse> response(OrderGroup orderGroup) {
+		OrderGroupApiResponse orderGroupApiResponse = OrderGroupApiResponse.builder()
 												.id(orderGroup.getId())
 												.userId(orderGroup.getUser().getId())
 												.totalPrice(orderGroup.getTotalPrice())
 												.totalQuantity(orderGroup.getTotalQuantity())
 												.status(orderGroup.getStatus())
 												.orderType(orderGroup.getOrderType())
-												.revAdress(orderGroup.getRevAdress())
+												.revAddress(orderGroup.getRevAddress())
 												.revName(orderGroup.getRevName())
 												.paymentType(orderGroup.getPaymentType())
 												.createdBy(orderGroup.getCreatedBy())
@@ -109,7 +110,7 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
 												.orderAt(orderGroup.getOrderAt())
 												.build();
 		
-		return Header.OK(orderGroupResponse);
+		return Header.OK(orderGroupApiResponse);
 	}
 	
 }
