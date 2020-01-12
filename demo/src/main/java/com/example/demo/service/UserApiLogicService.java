@@ -3,20 +3,27 @@ package com.example.demo.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.entity.OrderGroup;
 import com.example.demo.model.entity.User;
 import com.example.demo.model.enumclass.UserStatus;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.UserApiRequest;
+import com.example.demo.model.network.response.OrderGroupApiResponse;
 import com.example.demo.model.network.response.UserApiResponse;
 
 @Service
 public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User> {
+	
+	@Autowired
+	private OrderGroupApiLogicService orderGroupApiLogicService;
 
 	// 1. get request data
 	// 2. create User
@@ -125,5 +132,27 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 		
 		return Header.OK(userApiResponseList);
 	}
+
+	public Header<UserApiResponse> orderInfo(Long id) {
+		
+		// 1. find User
+		User user = baseRepository.getOne(id);
+		UserApiResponse userApiResponse = response(user);
+		
+		// 2. find OrderGroup
+		List<OrderGroup> orderGroupList = user.getOrderGroupList();
+//		List<OrderGroupApiResponse> orderGroupApiResponseList = orderGroupList.stream()
+//																.map(orderGroup -> {
+//																	OrderGroupApiResponse orderGroupApiResponse = orderGroupApiLogicService.response(orderGroup);
+//																	List<It>
+//																	
+//																})
+//	//															.map(response -> response.getData())
+//																.collect(Collectors.toList());
+		
+		// 3. find Item
+		return null;
+	}
+
 
 }

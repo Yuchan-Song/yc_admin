@@ -1,6 +1,7 @@
 package com.example.demo.model.network.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.example.demo.model.entity.User;
 import com.example.demo.model.enumclass.OrderStatus;
@@ -37,5 +38,7 @@ public class OrderGroupApiResponse {
 	private LocalDateTime arrivalDate;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	
+	private List<ItemApiResponse> itemApiResponseList;
 	
 }

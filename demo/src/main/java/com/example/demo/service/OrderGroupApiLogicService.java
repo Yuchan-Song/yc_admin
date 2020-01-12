@@ -44,7 +44,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
 				return orderGroup;
 			})
 			.map(newOrderGroup -> baseRepository.save(newOrderGroup))
-			.map(newOrderGroup -> response(newOrderGroup))
+			.map(newOrderGroup -> Header.OK(response(newOrderGroup)))
 			.orElseGet(() -> Header.ERROR("데이터 없음"));
 
 	}
@@ -52,7 +52,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
 	@Override
 	public Header<OrderGroupApiResponse> read(Long id) {
 		return baseRepository.findById(id)
-				.map(orderGroup -> response(orderGroup))
+				.map(orderGroup -> Header.OK(response(orderGroup)))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
@@ -76,7 +76,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
 					return orderGroup;
 				})
 				.map(orderGroup -> baseRepository.save(orderGroup))
-				.map(orderGroup -> response(orderGroup))
+				.map(orderGroup -> Header.OK(response(orderGroup)))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
@@ -91,8 +91,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
-	@SuppressWarnings("unused")
-	private Header<OrderGroupApiResponse> response(OrderGroup orderGroup) {
+	public OrderGroupApiResponse response(OrderGroup orderGroup) {
 		OrderGroupApiResponse orderGroupApiResponse = OrderGroupApiResponse.builder()
 												.id(orderGroup.getId())
 												.userId(orderGroup.getUser().getId())
@@ -111,7 +110,7 @@ public class OrderGroupApiLogicService extends BaseService<OrderGroupApiRequest,
 												.orderAt(orderGroup.getOrderAt())
 												.build();
 		
-		return Header.OK(orderGroupApiResponse);
+		return orderGroupApiResponse;
 	}
 
 	@Override
