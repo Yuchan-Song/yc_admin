@@ -1,23 +1,19 @@
 package com.example.demo.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.Partner;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.PartnerApiRequest;
 import com.example.demo.model.network.response.PartnerApiResponse;
-import com.example.demo.repository.PartnerRepository;
 
 @Service
-public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, PartnerApiResponse>{
-	
-	@Autowired
-	private PartnerRepository partnerRepository;
+public class PartnerApiLogicService extends BaseService<PartnerApiRequest, PartnerApiResponse, Partner>{
 
 	@Override
 	public Header<PartnerApiResponse> create(Header<PartnerApiRequest> request) {
@@ -37,14 +33,14 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 								.registeredAt(LocalDateTime.now())
 								.build();
 
-		Partner newPartner = partnerRepository.save(partner);
+		Partner newPartner = baseRepository.save(partner);
 		
 		return response(newPartner);
 	}
 
 	@Override
 	public Header<PartnerApiResponse> read(Long id) {
-		return partnerRepository.findById(id)
+		return baseRepository.findById(id)
 				.map(partner -> response(partner))
 				.orElseGet(() -> Header.ERROR("데이터가 없음"));
 	}
@@ -53,7 +49,7 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 	public Header<PartnerApiResponse> update(Header<PartnerApiRequest> request) {
 		PartnerApiRequest body = request.getData();
 		
-		Optional<Partner> optional = partnerRepository.findById(body.getId());
+		Optional<Partner> optional = baseRepository.findById(body.getId());
 		
 		return optional.map(partner -> {
 			partner.setAddress(body.getAddress())
@@ -68,7 +64,7 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 			
 				return partner;
 		})
-		.map(partner -> partnerRepository.save(partner))
+		.map(partner -> baseRepository.save(partner))
 		.map(partner -> response(partner))
 		.orElseGet(() -> Header.ERROR("데이터가 없음"));
 	}
@@ -76,10 +72,10 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 	@Override
 	@SuppressWarnings({"rawtypes"})
 	public Header delete(Long id) {
-		Optional<Partner> optional = partnerRepository.findById(id);
+		Optional<Partner> optional = baseRepository.findById(id);
 		
 		return  optional.map(partner -> {
-					partnerRepository.deleteById(id);
+					baseRepository.deleteById(id);
 					return Header.OK();
 				})
 				.orElseGet(() -> Header.ERROR("데이터가 없음"));
@@ -106,6 +102,12 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 												.build();
 		
 		return Header.OK(partnerApiResponse);
+	}
+
+	@Override
+	public Header<List<PartnerApiResponse>> search(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

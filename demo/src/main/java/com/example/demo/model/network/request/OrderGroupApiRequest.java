@@ -3,6 +3,7 @@ package com.example.demo.model.network.request;
 import java.time.LocalDateTime;
 
 import com.example.demo.model.enumclass.OrderStatus;
+import com.example.demo.model.enumclass.OrderType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,10 +24,11 @@ public class OrderGroupApiRequest {
 	
 	private String createdBy;
 	private String updatedBy;
-	private String orderType;
 	private String paymentType;
 	private String revAddress;
 	private String revName;
+	
+	private OrderType orderType;
 	private OrderStatus status;
 	
 	private LocalDateTime orderAt;

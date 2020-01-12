@@ -9,12 +9,9 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.assertj.core.api.Assert;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.DemoApplicationTests;
-import com.example.demo.model.entity.Item;
 import com.example.demo.model.entity.OrderDetail;
 import com.example.demo.model.entity.User;
 

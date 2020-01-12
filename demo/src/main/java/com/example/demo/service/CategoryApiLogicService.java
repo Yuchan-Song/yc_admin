@@ -1,22 +1,18 @@
 package com.example.demo.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.Category;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.CategoryApiRequest;
 import com.example.demo.model.network.response.CategoryApiResponse;
-import com.example.demo.repository.CategoryRepository;
 
 @Service
-public class CategoryApiLogicService implements CrudInterface<CategoryApiRequest, CategoryApiResponse>{
-
-	@Autowired
-	private CategoryRepository categoryRepository;
+public class CategoryApiLogicService extends BaseService<CategoryApiRequest, CategoryApiResponse, Category>{
 	
 	@Override
 	public Header<CategoryApiResponse> create(Header<CategoryApiRequest> request) {
@@ -29,14 +25,14 @@ public class CategoryApiLogicService implements CrudInterface<CategoryApiRequest
 							.createdBy("ADMIN")
 							.build();
 		
-		Category newCategory = categoryRepository.save(category);
+		Category newCategory = baseRepository.save(category);
 		
 		return response(newCategory);
 	}
 
 	@Override
 	public Header<CategoryApiResponse> read(Long id) {
-		return categoryRepository.findById(id)
+		return baseRepository.findById(id)
 				.map(category -> response(category))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 		
@@ -46,7 +42,7 @@ public class CategoryApiLogicService implements CrudInterface<CategoryApiRequest
 	public Header<CategoryApiResponse> update(Header<CategoryApiRequest> request) {
 		CategoryApiRequest body = request.getData();
 		
-		return categoryRepository.findById(body.getId())
+		return baseRepository.findById(body.getId())
 				.map(category -> {
 					category.setTitle(body.getTitle())
 							.setUpdatedAt(LocalDateTime.now())
@@ -55,7 +51,7 @@ public class CategoryApiLogicService implements CrudInterface<CategoryApiRequest
 					
 					return category;
 				})
-				.map(category -> categoryRepository.save(category))
+				.map(category -> baseRepository.save(category))
 				.map(category -> response(category))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
@@ -63,9 +59,9 @@ public class CategoryApiLogicService implements CrudInterface<CategoryApiRequest
 	@Override
 	@SuppressWarnings({"rawtypes"})
 	public Header delete(Long id) {
-		return categoryRepository.findById(id)
+		return baseRepository.findById(id)
 				.map(category -> {
-					categoryRepository.deleteById(id);
+					baseRepository.deleteById(id);
 					return Header.OK();
 				})
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
@@ -84,6 +80,12 @@ public class CategoryApiLogicService implements CrudInterface<CategoryApiRequest
 												.build();
 		
 		return Header.OK(categoryApiResponse);
+	}
+
+	@Override
+	public Header<List<CategoryApiResponse>> search(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

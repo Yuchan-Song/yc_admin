@@ -2,6 +2,8 @@ package com.example.demo.model.network.response;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.model.enumclass.OrderStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +21,7 @@ public class OrderDetailApiResponse {
 	private int quantity;
 	private int price;
 
-	private String status;
+	private OrderStatus status;
 	private String createdBy;
 	private String updatedBy;
 	

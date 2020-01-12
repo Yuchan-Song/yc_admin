@@ -26,5 +26,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	// phoneNumber의 첫번째로 검색 후 id로 내림차순 정렬
 	User findFirstByPhoneNumberOrderByIdDesc(String phoneNumber);
-
+	
 }

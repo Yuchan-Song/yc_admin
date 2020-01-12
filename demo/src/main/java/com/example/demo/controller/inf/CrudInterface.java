@@ -1,8 +1,12 @@
 package com.example.demo.controller.inf;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+
 import com.example.demo.model.network.Header;
 
-public interface CrudInterface<Req, Res> {
+public interface CrudInterface<Req, Res, Entity> {
 	
 	Header<Res> create(Header<Req> request);
 	
@@ -12,4 +16,6 @@ public interface CrudInterface<Req, Res> {
 
 	@SuppressWarnings("rawtypes")
 	Header delete(Long id);
+
+	Header<List<Res>> search(Pageable pageable);
 }

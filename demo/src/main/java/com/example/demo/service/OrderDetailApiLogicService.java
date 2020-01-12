@@ -1,23 +1,19 @@
 package com.example.demo.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.OrderDetail;
 import com.example.demo.model.entity.OrderGroup;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.OrderDetailApiRequest;
 import com.example.demo.model.network.response.OrderDetailApiResponse;
-import com.example.demo.repository.OrderDetailRepository;
 
 @Service
-public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiRequest, OrderDetailApiResponse>{
-
-	@Autowired
-	private OrderDetailRepository orderDetailRepository;
+public class OrderDetailApiLogicService extends BaseService<OrderDetailApiRequest, OrderDetailApiResponse, OrderDetail>{
 	
 	@Override
 	public Header<OrderDetailApiResponse> create(Header<OrderDetailApiRequest> request) {
@@ -35,14 +31,14 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 								  .orderGroup(orderGroup)
 								  .build();
 		
-		OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
+		OrderDetail newOrderDetail = baseRepository.save(orderDetail);
 		
 		return response(newOrderDetail);
 	}
 
 	@Override
 	public Header<OrderDetailApiResponse> read(Long id) {
-		return orderDetailRepository.findById(id)
+		return baseRepository.findById(id)
 				.map(orderDetail -> response(orderDetail))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 		
@@ -53,7 +49,7 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 		
 		OrderDetailApiRequest body = request.getData();
 		
-		return orderDetailRepository.findById(body.getId())
+		return baseRepository.findById(body.getId())
 				.map(orderDetail -> {
 					orderDetail.setQuantity(body.getQuantity())
 							   .setPrice(body.getPrice())
@@ -63,7 +59,7 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 							   .setArrivalDate(LocalDateTime.now());
 					return orderDetail;
 				})
-				.map(orderDetail -> orderDetailRepository.save(orderDetail))
+				.map(orderDetail -> baseRepository.save(orderDetail))
 				.map(orderDetail -> response(orderDetail))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
@@ -71,9 +67,9 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 	@Override
 	@SuppressWarnings({"rawtypes"})
 	public Header delete(Long id) {
-		return orderDetailRepository.findById(id)
+		return baseRepository.findById(id)
 				.map(orderDetail -> {
-					orderDetailRepository.deleteById(id);
+					baseRepository.deleteById(id);
 					return Header.OK();
 				})
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
@@ -97,6 +93,12 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 		
 		return Header.OK(orderDetailApiResponse);
 		
+	}
+
+	@Override
+	public Header<List<OrderDetailApiResponse>> search(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

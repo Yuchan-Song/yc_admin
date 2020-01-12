@@ -1,27 +1,24 @@
 package com.example.demo.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.controller.inf.CrudInterface;
 import com.example.demo.model.entity.Item;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.ItemApiRequest;
 import com.example.demo.model.network.response.ItemApiResponse;
-import com.example.demo.repository.ItemRepository;
 import com.example.demo.repository.PartnerRepository;
 
 @Service
-public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemApiResponse> {
+public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResponse, Item> {
 	
 	@Autowired
 	private PartnerRepository partnerRepository;
-	
-	@Autowired
-	private ItemRepository itemRepository;
 	
 	@Override
 	public Header<ItemApiResponse> create(Header<ItemApiRequest> request) {
@@ -41,7 +38,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 					.partner(partnerRepository.getOne(body.getId()))
 					.build();
 		
-		Item newItem = itemRepository.save(item);
+		Item newItem = baseRepository.save(item);
 		
 		return this.response(newItem);
 
@@ -49,7 +46,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
 	@Override
 	public Header<ItemApiResponse> read(Long id) {
-		Optional<Item> optional = itemRepository.findById(id);
+		Optional<Item> optional = baseRepository.findById(id);
 		
 		return optional.map(item -> response(item))
 				.orElseGet(() -> Header.ERROR("데이터 없음"));
@@ -59,7 +56,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 	public Header<ItemApiResponse> update(Header<ItemApiRequest> request) {
 		ItemApiRequest body = request.getData();
 		
-		Optional<Item> optional = itemRepository.findById(body.getId());
+		Optional<Item> optional = baseRepository.findById(body.getId());
 		
 		return optional.map(item -> {
 			item.setStatus(body.getStatus())
@@ -74,17 +71,17 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 			
 			return item;
 		})
-		.map(item -> itemRepository.save(item))
+		.map(item -> baseRepository.save(item))
 		.map(item -> response(item))
 		.orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"rawtypes"})
 	@Override
 	public Header delete(Long id) {
-		Optional<Item> optional = itemRepository.findById(id);
+		Optional<Item> optional = baseRepository.findById(id);
 		return optional.map(item -> {
-			itemRepository.deleteById(id);
+			baseRepository.deleteById(id);
 			return Header.OK();
 		})
 		.orElseGet(() -> Header.ERROR("데이터 없음"));
@@ -109,6 +106,12 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 										  .build();
 		
 		return Header.OK(itemApiResponse);
+	}
+
+	@Override
+	public Header<List<ItemApiResponse>> search(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -5,14 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.DemoApplicationTests;
 import com.example.demo.model.entity.Item;
 import com.example.demo.model.entity.OrderDetail;
 import com.example.demo.model.entity.User;
-import com.example.demo.model.enumclass.OrderStatus;
 
 public class OrderDetailRepositoryTest extends DemoApplicationTests {
 

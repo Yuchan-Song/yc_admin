@@ -19,6 +19,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.example.demo.model.enumclass.ItemStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +44,8 @@ public class Item {
 
 	private int price;
 	
-	private String status;
+	private ItemStatus status;		// 등록, 해지, 검수증
+	
 	private String name;
 	private String title;
 	private String content;

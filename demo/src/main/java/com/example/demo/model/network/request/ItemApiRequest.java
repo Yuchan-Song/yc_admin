@@ -2,6 +2,8 @@ package com.example.demo.model.network.request;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.model.enumclass.ItemStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +19,8 @@ public class ItemApiRequest {
 
 	private int price;
 
-	private String status;
+	private ItemStatus status;
+	
 	private String name;
 	private String title;
 	private String content;

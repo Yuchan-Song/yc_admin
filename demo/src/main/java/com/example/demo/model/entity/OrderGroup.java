@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.example.demo.model.enumclass.OrderStatus;
+import com.example.demo.model.enumclass.OrderType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,10 +49,14 @@ public class OrderGroup {
 	private String createdBy;
 	@LastModifiedBy
 	private String updatedBy;
-	private String orderType;
+	
 	private String paymentType;
 	private String revAddress;
 	private String revName;
+	
+	@Enumerated
+	private OrderType orderType;
+	@Enumerated
 	private OrderStatus status;
 	
 	private LocalDateTime orderAt;
