@@ -1,5 +1,6 @@
 package com.example.demo.controller.api;
 
+import com.example.demo.model.network.response.UserOrderInfoApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ public class UserApiController extends CrudController<UserApiRequest, UserApiRes
 	private UserApiLogicService userApiLogicService;
 	
 	@GetMapping("/{id}/orderinfo")
-	public Header<UserApiResponse> orderInfo(@PathVariable(name="id") Long id) {
+	public Header<UserOrderInfoApiResponse> orderInfo(@PathVariable(name="id") Long id) {
 		return userApiLogicService.orderInfo(id);
 	}
 

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import jdk.internal.instrumentation.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;

@@ -54,23 +54,30 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
 
 	@Override
 	public Header<ItemApiResponse> update(Header<ItemApiRequest> request) {
-		ItemApiRequest body = request.getData();
-		
-		Optional<Item> optional = baseRepository.findById(body.getId());
-		
-		return optional.map(item -> {
-			item.setStatus(body.getStatus())
-				.setName(body.getName())
-				.setTitle(body.getTitle())
-				.setContent(body.getContent())
-				.setBrandName(body.getBrandName())
-				.setUpdatedBy("ADMIN USER")
-				.setUpdatedAt(LocalDateTime.now())
-				.setPrice(body.getPrice())
-				.setPartner(partnerRepository.getOne(body.getId()));
-			
-			return item;
-		})
+
+		return Optional.ofNullable(request.getData())
+				.map(body ->{
+					return baseRepository.findById(body.getId());
+				})
+				.filter(Optional::isPresent)
+				.map(Optional::get)
+				.map(item -> {
+
+					ItemApiRequest body = request.getData();
+					item.setStatus(body.getStatus())
+							.setTitle(body.getTitle())
+							.setContent(body.getContent())
+							.setName(body.getName())
+							.setPrice(body.getPrice())
+							.setBrandName(body.getBrandName())
+							.setPartner(partnerRepository.getOne(body.getPartnerId()))
+							.setStatus(body.getStatus())
+							.setRegisteredAt(body.getRegisteredAt())
+							.setUnregisteredAt(body.getUnregisteredAt())
+					;
+					return item;
+
+				})
 		.map(item -> baseRepository.save(item))
 		.map(item -> response(item))
 		.orElseGet(() -> Header.ERROR("데이터 없음"));

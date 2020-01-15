@@ -33,6 +33,9 @@ public class Header<T> {
 	
 	// data 영역은 generinc으로 선언
 	private T data;
+
+	// pagination
+	private Pagination pagination;
 	
 	// Data가 없는 OK 메소드
 	public static<T> Header<T> OK() {
@@ -50,6 +53,17 @@ public class Header<T> {
 				.resultCode("OK")
 				.description("OK")
 				.data(data)
+				.build();
+	}
+
+	// Data와 Page가 있는 OK 메소드
+	public static <T> Header<T> OK(T data, Pagination pagination){
+		return (Header<T>)Header.builder()
+				.transactionTime(LocalDateTime.now())
+				.resultCode("OK")
+				.description("OK")
+				.data(data)
+				.pagination(pagination)
 				.build();
 	}
 	

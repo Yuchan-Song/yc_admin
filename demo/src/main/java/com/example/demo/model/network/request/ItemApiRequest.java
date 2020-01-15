@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class ItemApiRequest {
 	
 	private Long id;
+	private Long partnerId;
 
 	private int price;
 

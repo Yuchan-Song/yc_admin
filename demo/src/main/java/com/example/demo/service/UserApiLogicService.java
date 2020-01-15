@@ -3,9 +3,11 @@ package com.example.demo.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.example.demo.model.network.Pagination;
+import com.example.demo.model.network.response.ItemApiResponse;
+import com.example.demo.model.network.response.UserOrderInfoApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,9 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 	
 	@Autowired
 	private OrderGroupApiLogicService orderGroupApiLogicService;
+
+	@Autowired
+	private ItemApiLogicService itemApiLogicService;
 
 	// 1. get request data
 	// 2. create User
@@ -129,11 +134,18 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 		List<UserApiResponse> userApiResponseList = users.stream()
 													.map(user -> response(user))
 													.collect(Collectors.toList());
-		
-		return Header.OK(userApiResponseList);
+
+		Pagination pagination = Pagination.builder()
+				.totalPages(users.getTotalPages())
+				.totalElements(users.getTotalElements())
+				.currentPage(users.getNumber())
+				.currentElements(users.getNumberOfElements())
+				.build();
+
+		return Header.OK(userApiResponseList,pagination);
 	}
 
-	public Header<UserApiResponse> orderInfo(Long id) {
+	public Header<UserOrderInfoApiResponse> orderInfo(Long id) {
 		
 		// 1. find User
 		User user = baseRepository.getOne(id);
@@ -141,17 +153,28 @@ public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResp
 		
 		// 2. find OrderGroup
 		List<OrderGroup> orderGroupList = user.getOrderGroupList();
-//		List<OrderGroupApiResponse> orderGroupApiResponseList = orderGroupList.stream()
-//																.map(orderGroup -> {
-//																	OrderGroupApiResponse orderGroupApiResponse = orderGroupApiLogicService.response(orderGroup);
-//																	List<It>
-//																	
-//																})
-//	//															.map(response -> response.getData())
-//																.collect(Collectors.toList());
-		
-		// 3. find Item
-		return null;
+		List<OrderGroupApiResponse> orderGroupApiResponseList = orderGroupList.stream()
+				.map(orderGroup -> {
+					OrderGroupApiResponse orderGroupApiResponse = orderGroupApiLogicService.response(orderGroup);
+
+					// item api response
+					List<ItemApiResponse> itemApiResponseList = orderGroup.getOrderDetailList().stream()
+							.map(detail -> detail.getItem())
+							.map(item -> itemApiLogicService.response(item).getData())
+							.collect(Collectors.toList());
+
+					orderGroupApiResponse.setItemApiResponseList(itemApiResponseList);
+					return orderGroupApiResponse;
+				})
+				.collect(Collectors.toList());
+
+		userApiResponse.setOrderGroupApiResponseList(orderGroupApiResponseList);
+		UserOrderInfoApiResponse userOrderInfoApiResponse = UserOrderInfoApiResponse.builder()
+				.userApiResponse(userApiResponse)
+				.build();
+
+
+		return Header.OK(userOrderInfoApiResponse);
 	}
 
 
