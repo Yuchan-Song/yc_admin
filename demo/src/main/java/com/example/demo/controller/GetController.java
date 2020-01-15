@@ -30,10 +30,4 @@ public class GetController {
 		return searchParam;
 	}
 
-	@SuppressWarnings({ "rawtypes", "static-access" })
-	@GetMapping("/getHeader")
-	public Header getHeader() {
-		return new Header().builder().resultCode("OK").description("OK").build();
-	}
-	
 }

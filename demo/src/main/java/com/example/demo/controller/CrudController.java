@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import jdk.internal.instrumentation.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -39,21 +40,18 @@ public abstract class CrudController<Req, Res, Entity> implements CrudInterface<
 	@Override
 	@PostMapping("")
 	public Header<Res> create(@RequestBody Header<Req> request) {
-		log.info("{}", request);
 		return baseService.create(request);
 	}
 
 	@Override
 	@GetMapping("{id}")
 	public Header<Res> read(@PathVariable(name="id") Long id) {
-		log.info("read id : {}", id);
 		return baseService.read(id);
 	}
 
 	@Override
 	@PutMapping("")
 	public Header<Res> update(@RequestBody Header<Req> request) {
-		log.info("{}", request);
 		return baseService.update(request);
 	}
 
@@ -61,7 +59,6 @@ public abstract class CrudController<Req, Res, Entity> implements CrudInterface<
 	@DeleteMapping("{id}")
 	@SuppressWarnings({"rawtypes"})
 	public Header delete(@PathVariable(name="id") Long id) {
-		log.info("read id : {}", id);
 		return baseService.delete(id);
 	}
 	
